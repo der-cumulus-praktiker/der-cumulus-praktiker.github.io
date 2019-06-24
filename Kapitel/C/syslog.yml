@@ -1,0 +1,7 @@
+---
+- hosts: sw01
+  tasks:
+  - name: Logmeldungen an Syslog-Server senden
+    command: net add syslog host ipv4 10.5.1.7 port 514
+  - name: Konfiguration anwenden
+    command: net commit

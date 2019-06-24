@@ -1,0 +1,80 @@
+#
+#  vRouter aus Kapitel 16, läuft auf VMware Workstation 14
+#  SecurityRouter 6.3-crux-p1
+#
+firewall {
+	pass quick on lan label LAN
+	pass in log quick on mgmt proto tcp to (mgmt) port {$mgmt_ports} label management
+	pass out quick on wan label outbound
+}
+interface em0 {
+	description "Server"
+	address 10.11.2.1/24
+	address fd00:11:2::1/64
+	firewall {
+		skip
+	}
+	router-advertisement
+}
+interface em1 {
+	description "Uplink sw11:swp5"
+	address 10.1.111.72/24
+	firewall {
+		skip
+	}
+}
+interface em2 {
+	description "Uplink sw12:swp5"
+	address 10.1.121.72/24
+	firewall {
+		skip
+	}
+}
+interface vic0 {
+	description "Management"
+	group "wan"
+	group "mgmt"
+	address 10.5.1.73/24
+	route 10.4.0.0/16 10.5.1.250
+}
+ospf {
+	router-id 7.3.7.3
+	area 0.0.0.1 {
+		interface em0
+		interface em1 {
+			hello-interval 1
+			router-dead-time 4
+		}
+		interface em2 {
+			hello-interval 1
+			router-dead-time 4
+		}
+	}
+}
+ospf6 {
+	router-id 7.3.7.3
+	area 0.0.0.1 {
+		interface em0
+		interface em1 {
+			hello-interval 1
+			router-dead-time 4
+		}
+		interface em2 {
+			hello-interval 1
+			router-dead-time 4
+		}
+	}
+}
+system {
+	host-name vrouter3.lab
+	authentication {
+		user "admin" {
+			password "$2b$08$eObe16QGqlWPCyrIRSZ5X.RRi14wzItKOyGzRn6MeKeiZmAFHNnfW" # SALTED-HASH
+		}
+	}
+	dns {
+		name-server 10.4.110.4
+	}
+	http-server
+	ssh-server
+}

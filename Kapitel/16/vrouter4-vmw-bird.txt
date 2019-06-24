@@ -1,0 +1,91 @@
+#
+#  vRouter aus Kapitel 16, läuft auf VMware Workstation 14
+#  BIRD 2.0.2
+#
+
+# assign IP addresses first
+ip addr add 10.11.2.1/24 dev eth1
+ip -6 addr add fd00:11:2::1/64 dev eth1
+ip addr add 10.1.111.74/24 dev eth2
+ip addr add 10.1.121.74/24 dev eth3
+ip link set eth1 up
+ip link set eth2 up
+ip link set eth3 up
+sysctl -w net.ipv6.conf.all.forwarding=1
+sysctl -w net.ipv4.ip_forward=1
+
+
+# ----------- Hier beginnt /etc/bird.conf -----------
+
+log "/var/log/bird.log" {
+        debug, trace, info, remote, warning, error, auth, fatal, bug
+};
+
+router id 7.4.7.4;
+
+# Turn on global debugging of all protocols (all messages or just selected classes)
+# debug protocols all;
+debug protocols { events, states };
+
+# The Device protocol is not a real routing protocol. It does not generate any
+# routes and it only serves as a module for getting information about network
+# interfaces from the kernel. It is necessary in almost any configuration.
+protocol device {
+        scan time 10;
+}
+
+# The direct protocol is not a real routing protocol. It automatically generates
+# direct routes to all network interfaces. Can exist in as many instances as you
+# wish if you want to populate multiple routing tables with direct routes.
+protocol direct {
+        ipv4;                   # Connect to default IPv4 table
+        ipv6;                   # ... and to default IPv6 table
+}
+
+# The Kernel protocol is not a real routing protocol. Instead of communicating
+# with other routers in the network, it performs synchronization of BIRD
+# routing tables with the OS kernel. One instance per table.
+protocol kernel {
+        ipv4 {                  # Connect protocol to IPv4 table by channel
+              import all;       # Import to table, default is import all
+              export all;       # Export to protocol. default is export none
+        };
+        learn;                  # Learn alien routes from the kernel
+        scan time 10;
+}
+
+protocol kernel {
+        ipv6 {
+                export all;
+                import all;
+        };
+}
+
+protocol ospf v2 ospf4 {
+        area 0.0.0.1 {
+                interface "eth1", "eth2", "eth3" {
+                        type pointopoint;
+                        cost 10;
+                        hello 1;
+                        dead 4;
+                };
+                networks {
+                        10.11.2.0/24;
+                };
+        };
+}
+
+protocol ospf v3 ospf6 {
+        area 0.0.0.1 {
+                interface "eth1", "eth2", "eth3" {
+                        type pointopoint;
+                        cost 10;
+                        hello 1;
+                        dead 4;
+                };
+                networks {
+                        10.11.2.0/24;
+                        fd00:11:2::/64;
+                };
+        };
+}

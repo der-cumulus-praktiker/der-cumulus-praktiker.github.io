@@ -1,0 +1,38 @@
+#
+#  Server-VM aus Kapitel 16, läuft auf ESXi auf VMware Workstation 14
+#  VyOS 1.2.0-rolling+201810070337
+#
+set interfaces ethernet eth0 address '10.5.1.77/24'
+set interfaces ethernet eth0 description 'mgmt'
+set interfaces ethernet eth0 duplex 'auto'
+set interfaces ethernet eth0 hw-id '00:0c:29:b0:9f:06'
+set interfaces ethernet eth0 smp-affinity 'auto'
+set interfaces ethernet eth0 speed 'auto'
+set interfaces ethernet eth1 address '10.11.2.10/24'
+set interfaces ethernet eth1 address 'fd00:11:2::10/64'
+set interfaces ethernet eth1 description 'server'
+set interfaces ethernet eth1 duplex 'auto'
+set interfaces ethernet eth1 hw-id '00:0c:29:b0:9f:10'
+set interfaces ethernet eth1 smp-affinity 'auto'
+set interfaces ethernet eth1 speed 'auto'
+set interfaces loopback lo
+set protocols static route 0.0.0.0/0 next-hop 10.11.2.1
+set protocols static route 10.4.0.0/16 next-hop 10.5.1.250
+set protocols static route6 ::/0 next-hop fd00:11:2::1 interface 'eth1'
+set service ssh port '22'
+set system config-management commit-revisions '100'
+set system host-name 'server1a-vyos'
+set system ip disable-forwarding
+set system ipv6 disable-forwarding
+set system login user vyos authentication encrypted-password '$1$gU100Pg/$xQUpNRtppcSQuD6bKQkGI1'
+set system login user vyos authentication plaintext-password ''
+set system login user vyos authentication public-keys rsa-key-clb key 'AAAAB3NzaC1yc2EAAAABJQAAAQEA1iCLr6uIu0S7btbOtaxpIATcUG+6Qbn/V/c7dxvpKHwD61xGCTpPRa7vosknCMKXG8LiMBSUdJVW/uEQlM8cP3aYIWF182yWiM1THtJCvxprd4yVCu0Arfsw+aPhrp9VE4h6pdHwpZ0qvszMnud55mpdQL1rviv3BNaxljY+Bmcw+37NNmzzWeYnB6EyeVscUTYqxz8Vl7GHD2cRSl/pRr4tH8odpeF9H1oTflZpnQyYGOLlMwAoFUuVxmQ1UMbWFgIx/SIFgbkuubyx4CyJ76edZjCJsVElvks6SDmNIxi6iSPQNDTw8qkTB4JYnI11Q8g1dRV5cPyTQmV/QGk9Vw=='
+set system login user vyos authentication public-keys rsa-key-clb type 'ssh-rsa'
+set system login user vyos level 'admin'
+set system name-server '10.4.110.4'
+set system ntp server 0.pool.ntp.org
+set system ntp server 1.pool.ntp.org
+set system ntp server 2.pool.ntp.org
+set system syslog global facility all level 'notice'
+set system syslog global facility protocols level 'debug'
+set system time-zone 'Europe/Berlin'

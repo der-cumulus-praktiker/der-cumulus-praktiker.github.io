@@ -1,0 +1,63 @@
+frr version 5.0.1
+frr defaults traditional
+hostname server4
+no ip forwarding
+no ipv6 forwarding
+!
+interface eth1
+ description sw13-swp6
+ ip address 10.2.134.34/24
+ ip ospf bfd 3 300 300
+ ip ospf dead-interval 4
+ ip ospf hello-interval 1
+ ip ospf network point-to-point
+ ipv6 ospf6 bfd 3 300 300
+ ipv6 ospf6 dead-interval 4
+ ipv6 ospf6 hello-interval 1
+ ipv6 ospf6 network point-to-point
+!
+interface eth2
+ description sw14-swp6
+ ip address 10.2.144.34/24
+ ip ospf bfd 3 300 300
+ ip ospf dead-interval 4
+ ip ospf hello-interval 1
+ ip ospf network point-to-point
+ ipv6 ospf6 bfd 3 300 300
+ ipv6 ospf6 dead-interval 4
+ ipv6 ospf6 hello-interval 1
+ ipv6 ospf6 network point-to-point
+!
+interface lo
+ ip address 10.22.33.1/32
+ ip address 10.22.34.1/32
+ ip address 192.0.2.34/32
+ ipv6 address 2001:db8:22:34::1/128
+ ipv6 address fd00:22:34::1/128
+ ipv6 ospf6 network broadcast
+!
+router ospf
+ ospf router-id 0.0.0.34
+ auto-cost reference-bandwidth 10000
+ redistribute static
+ passive-interface eth0
+ network 10.2.0.0/16 area 0.0.0.2
+ network 10.22.33.1/32 area 0.0.0.2
+ network 10.22.34.1/32 area 0.0.0.2
+ network 192.0.2.34/32 area 0.0.0.2
+ area 0.0.0.2 stub
+!
+router ospf6
+ ospf6 router-id 0.0.0.34
+ auto-cost reference-bandwidth 10000
+ redistribute static
+ interface lo area 0.0.0.2
+ interface eth2 area 0.0.0.2
+ interface eth1 area 0.0.0.2
+!
+ip route 192.0.2.134/32 lo
+ipv6 route 2001:db8:22:134::1/128 lo
+!
+line vty
+!
+end

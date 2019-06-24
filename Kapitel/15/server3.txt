@@ -1,0 +1,53 @@
+frr version 5.0.1
+frr defaults traditional
+hostname server2
+no ip forwarding
+no ipv6 forwarding
+hostname server3
+!
+interface eth1
+ description sw13-swp5
+ ip address 10.2.133.33/24
+ ip ospf bfd 3 300 300
+ ip ospf dead-interval 4
+ ip ospf hello-interval 1
+ ip ospf network point-to-point
+ ipv6 ospf6 bfd 3 300 300
+ ipv6 ospf6 dead-interval 4
+ ipv6 ospf6 hello-interval 1
+ ipv6 ospf6 network point-to-point
+!
+interface eth2
+ description sw14-swp5
+ ip address 10.2.143.33/24
+ ip ospf bfd 3 300 300
+ ip ospf dead-interval 4
+ ip ospf hello-interval 1
+ ip ospf network point-to-point
+ ipv6 ospf6 bfd 3 300 300
+ ipv6 ospf6 dead-interval 4
+ ipv6 ospf6 hello-interval 1
+ ipv6 ospf6 network point-to-point
+!
+interface lo
+ ip address 10.22.33.1/32
+ ipv6 address fd00:22:33::1/128
+ ipv6 ospf6 network broadcast
+!
+router ospf
+ ospf router-id 0.0.0.33
+ auto-cost reference-bandwidth 10000
+ passive-interface eth0
+ network 10.2.0.0/16 area 0.0.0.2
+ network 10.22.33.1/32 area 0.0.0.2
+!
+router ospf6
+ ospf6 router-id 0.0.0.33
+ auto-cost reference-bandwidth 10000
+ interface lo area 0.0.0.2
+ interface eth2 area 0.0.0.2
+ interface eth1 area 0.0.0.2
+!
+line vty
+!
+end

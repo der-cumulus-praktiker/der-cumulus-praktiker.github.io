@@ -1,0 +1,17 @@
+#
+#  vRouter aus Kapitel 16, läuft auf VMware Workstation 14
+#  BSD Router Project 1.9.1
+#
+frr version 5.0.1
+frr defaults traditional
+hostname router.bsdrp.net
+!
+interface em0
+ description mgmt
+ ip address 10.5.1.79/24
+!
+ip route 10.4.0.0/16 10.5.1.250
+!
+line vty
+!
+end

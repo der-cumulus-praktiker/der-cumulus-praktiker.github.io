@@ -1,0 +1,28 @@
+---
+- hosts: sw01
+  gather_facts: no
+  become: no
+  tasks:
+  - name: set local timezone
+    nclu:
+     commands:
+     - add time zone "Europe/Berlin"
+     - add time ntp source eth0
+  - name: delete pre-defined NTP servers
+    nclu:
+     commands:
+     - del time ntp server {{ item }}
+    loop:
+     - 0.cumulusnetworks.pool.ntp.org
+     - 1.cumulusnetworks.pool.ntp.org
+     - 2.cumulusnetworks.pool.ntp.org
+     - 3.cumulusnetworks.pool.ntp.org
+  - name: specify country-specific time servers
+    nclu:
+     commands:
+     - add time ntp server {{ item }} iburst
+     commit: true
+    loop:
+     - 0.de.pool.ntp.org
+     - 1.de.pool.ntp.org
+     - 2.de.pool.ntp.org

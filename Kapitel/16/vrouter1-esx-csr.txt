@@ -1,0 +1,209 @@
+!
+!  vRouter aus Kapitel 16, läuft auf ESXi (NEC-Server)
+!  Cisco CSR 1000, Version 16.03.07
+!
+version 16.3
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no platform punt-keepalive disable-kernel-core
+platform console auto
+!
+hostname vrouter1-csr
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+aaa new-model
+!
+!
+aaa authentication login MGMT local
+aaa authorization exec MGMT local none
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone MEZ 1 0
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip domain name lab
+ip cef load-sharing algorithm include-ports source destination
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 99VQUTVK0PG
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+!
+username admin privilege 15 secret 5 $1$PKa8$MmuoE6rKijSF4XMUGFCia1
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description OspfRouterId
+ ip address 7.1.7.1 255.255.255.255
+!
+interface GigabitEthernet1
+ description mgmt
+ ip address 10.5.2.71 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description server
+ ip address 10.4.27.1 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ description uplink1
+ ip address 10.2.27.74 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf dead-interval 4
+ ip ospf hello-interval 1
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ description uplink2
+ ip address 10.2.27.78 255.255.255.252
+ ip ospf network point-to-point
+ ip ospf dead-interval 4
+ ip ospf hello-interval 1
+ ip ospf 1 area 0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router ospf 1
+ router-id 7.1.7.1
+ auto-cost reference-bandwidth 10000
+ redistribute connected subnets route-map SERVER
+ passive-interface default
+ no passive-interface GigabitEthernet3
+ no passive-interface GigabitEthernet4
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+!
+ip route 192.168.134.0 255.255.255.0 10.5.2.250 name MGMT
+ip ssh pubkey-chain
+  username admin
+   key-hash ssh-rsa 55E89F749EF27338DEC4CA217F0CCBAE
+!
+!
+!
+!
+route-map SERVER permit 10
+ match interface GigabitEthernet2
+!
+!
+!
+!
+!
+control-plane
+!
+ !
+ !
+ !
+ !
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ exec-timeout 60 0
+ authorization exec MGMT
+ login authentication MGMT
+ transport input telnet ssh
+line vty 5 15
+ exec-timeout 60 0
+ authorization exec MGMT
+ login authentication MGMT
+ transport input telnet ssh
+!
+wsma agent exec
+!
+wsma agent config
+!
+wsma agent filesys
+!
+wsma agent notify
+!
+!
+end

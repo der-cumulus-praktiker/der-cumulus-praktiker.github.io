@@ -1,0 +1,19 @@
+graph G {
+  "sw01":"swp5" -- "sw02":"swp5";
+  "sw01":"swp6" -- "sw02":"swp6";
+
+  "sw01":"swp1" -- "sw11":"swp1";
+  "sw01":"swp2" -- "sw12":"swp1";
+  "sw01":"swp3" -- "sw13":"swp1";
+  "sw01":"swp4" -- "sw14":"swp1";
+
+  "sw02":"swp1" -- "sw11":"swp2";
+  "sw02":"swp2" -- "sw12":"swp2";
+  "sw02":"swp3" -- "sw13":"swp2";
+  "sw02":"swp4" -- "sw14":"swp2";
+
+  "sw11":"swp3" -- "sw12":"swp3";
+  "sw11":"swp4" -- "sw12":"swp4";
+  "sw13":"swp3" -- "sw14":"swp3";
+  "sw13":"swp4" -- "sw14":"swp4";
+}

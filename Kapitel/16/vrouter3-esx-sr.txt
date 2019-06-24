@@ -1,0 +1,62 @@
+#
+#  vRouter aus Kapitel 16, läuft auf ESXi (NEC-Server)
+#  SecurityRouter 6.2
+#
+firewall {
+	pass quick on lan label LAN
+	pass in log quick on mgmt proto tcp to (mgmt) port {$mgmt_ports} label management
+	pass out quick on wan label outbound
+}
+interface em0 {
+	description "mgmt"
+	address 10.5.2.73/24
+	firewall {
+		skip
+	}
+	route 192.168.134.0/24 10.5.2.250
+}
+interface em1 {
+	description "server"
+	address 10.4.27.1/24
+	firewall {
+		skip
+	}
+}
+interface em2 {
+	description "uplink1"
+	address 10.2.27.74/30
+	firewall {
+		skip
+	}
+}
+interface em3 {
+	description "uplink2"
+	address 10.2.27.78/30
+	firewall {
+		skip
+	}
+}
+ospf {
+	hello-interval 1
+	router-dead-time 4
+	router-id 7.3.7.3
+	area 0.0.0.0 {
+		interface em2
+		interface em3
+	}
+}
+system {
+	host-name vrouter3.lab
+	keyboard-layout "de"
+	authentication {
+		root-password "$2b$08$u27bPD2d7TiNHzh4zJkE7e4YaBNEVoDamghs5YAd71dRXNjUYJNc6" # SALTED-HASH
+		user "admin" {
+			password "$2b$08$fkDIokmDCA2EkD1VuC3GgucfIbZoQAqbsbsozuTbzLSV5hlFW1hZ." # SALTED-HASH
+		}
+	}
+	dns {
+		name-server 10.5.2.250
+	}
+	http-server
+	ssh-server
+}

@@ -1,0 +1,39 @@
+root@server17 ~> ip addr show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:d1:09:66 brd ff:ff:ff:ff:ff:ff
+    inet 10.5.2.17/24 brd 10.5.2.255 scope global noprefixroute eth0
+       valid_lft forever preferred_lft forever
+    inet6 fd00:5:2::17/64 scope global noprefixroute
+       valid_lft forever preferred_lft forever
+    inet6 fe80::1c07:66ed:e51d:dcb6/64 scope link
+       valid_lft forever preferred_lft forever
+3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 00:0c:29:d1:09:70 brd ff:ff:ff:ff:ff:ff
+    inet 10.2.20.17/24 brd 10.2.20.255 scope global noprefixroute eth1
+       valid_lft forever preferred_lft forever
+    inet6 fd00:2:20::17/64 scope global noprefixroute
+       valid_lft forever preferred_lft forever
+    inet6 fe80::8b07:cb98:aaf4:3cd9/64 scope link
+       valid_lft forever preferred_lft forever
+
+
+root@server17 ~> ip route show
+default via 10.5.2.250 dev eth0 proto static metric 100
+10.2.0.0/16 via 10.2.20.1 dev eth1 proto static metric 101
+10.2.20.0/24 dev eth1 proto kernel scope link src 10.2.20.17 metric 101
+10.5.2.0/24 dev eth0 proto kernel scope link src 10.5.2.17 metric 100
+
+
+root@server17 ~> ip -6 route show
+fd00:2:20::/64 dev eth1 proto kernel metric 101 pref medium
+fd00:2::/32 via fd00:2:20::1 dev eth1 proto static metric 101 pref medium
+fd00:5:2::/64 dev eth0 proto kernel metric 100 pref medium
+fe80::/64 dev eth0 proto kernel metric 256 pref medium
+fe80::/64 dev eth1 proto kernel metric 256 pref medium
+default via fd00:5:2::250 dev eth0 proto static metric 100 pref medium

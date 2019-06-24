@@ -1,0 +1,221 @@
+/* XORP configuration file
+ *
+ * vRouter aus Kapitel 16, läuft auf VMware Workstation 14
+ * Configuration format: 1.1
+ * XORP version: 1.8.5
+ * Date: 2018/09/26 14:29:03.791056
+ * Host: vrouter456
+ * User: root
+ *
+ * assign IP addresses first
+ip addr add 10.11.2.1/24 dev eth1
+ip -6 addr add fd00:11:2::1/64 dev eth1
+ip addr add 10.1.111.74/24 dev eth2
+ip addr add 10.1.121.74/24 dev eth3
+ip link set eth1 up
+ip link set eth2 up
+ip link set eth3 up
+sysctl net.ipv6.conf.all.forwarding=1
+sysctl net.ipv4.ip_forward=1
+sysctl net.ipv4.conf.eth2.rp_filter=0
+sysctl net.ipv4.conf.eth3.rp_filter=0
+ */
+
+protocols {
+    ospf4 {
+        router-id: 7.6.7.6
+        rfc1583-compatibility: false
+        ip-router-alert: false
+        traceoptions {
+            flag {
+                all {
+                    disable: true
+                }
+            }
+        }
+        area 0.0.0.1 {
+            area-type: "normal"
+            interface eth2 {
+                link-type: "p2p"
+                vif eth2 {
+                    address 10.1.111.76 {
+                        priority: 1
+                        hello-interval: 1
+                        router-dead-interval: 4
+                        interface-cost: 1
+                        retransmit-interval: 5
+                        transit-delay: 1
+                        neighbor 10.1.111.11 {
+                            router-id: 11.11.11.11
+                        }
+                        disable: false
+                    }
+                }
+            }
+            interface eth3 {
+                link-type: "p2p"
+                vif eth3 {
+                    address 10.1.121.76 {
+                        priority: 1
+                        hello-interval: 1
+                        router-dead-interval: 4
+                        interface-cost: 1
+                        retransmit-interval: 5
+                        transit-delay: 1
+                        neighbor 10.1.121.12 {
+                            router-id: 12.12.12.12
+                        }
+                        disable: false
+                    }
+                }
+            }
+            interface eth1 {
+                link-type: "broadcast"
+                vif eth1 {
+                    address 10.11.2.1 {
+                        priority: 128
+                        hello-interval: 10
+                        router-dead-interval: 40
+                        interface-cost: 1
+                        retransmit-interval: 5
+                        transit-delay: 1
+                        passive {
+                            disable: false
+                            host: false
+                        }
+                        disable: false
+                    }
+                }
+            }
+        }
+    }
+    ospf6 0 {
+        router-id: 7.6.7.6
+        ip-router-alert: false
+        area 0.0.0.1 {
+            area-type: "normal"
+            interface eth2 {
+                link-type: "broadcast"
+                vif eth2 {
+                    address fe80::20c:29ff:fefd:f43a {
+                        disable: false
+                    }
+                    priority: 128
+                    hello-interval: 1
+                    router-dead-interval: 4
+                    interface-cost: 1
+                    retransmit-interval: 5
+                    transit-delay: 1
+                    passive: false
+                    disable: false
+                }
+            }
+            interface eth3 {
+                link-type: "broadcast"
+                vif eth3 {
+                    address fe80::20c:29ff:fefd:f444 {
+                        disable: false
+                    }
+                    priority: 128
+                    hello-interval: 1
+                    router-dead-interval: 4
+                    interface-cost: 1
+                    retransmit-interval: 5
+                    transit-delay: 1
+                    passive: false
+                    disable: false
+                }
+            }
+            interface eth1 {
+                link-type: "broadcast"
+                vif eth1 {
+                    address fd00:11:2::1 {
+                        disable: false
+                    }
+                    priority: 128
+                    hello-interval: 10
+                    router-dead-interval: 40
+                    interface-cost: 1
+                    retransmit-interval: 5
+                    transit-delay: 1
+                    passive: true
+                    disable: false
+                }
+            }
+        }
+    }
+}
+fea {
+    unicast-forwarding4 {
+        disable: false
+    }
+    unicast-forwarding6 {
+        disable: false
+    }
+}
+interfaces {
+    restore-original-config-on-shutdown: false
+    interface eth1 {
+        description: ""
+        disable: false
+        discard: false
+        unreachable: false
+        management: false
+        parent-ifname: ""
+        iface-type: ""
+        vid: ""
+        vif eth1 {
+            disable: false
+            address 10.11.2.1 {
+                prefix-length: 24
+                disable: false
+            }
+            address fd00:11:2::1 {
+                prefix-length: 64
+                disable: false
+            }
+        }
+    }
+    interface eth2 {
+        description: "sw11:swp5"
+        disable: false
+        discard: false
+        unreachable: false
+        management: false
+        parent-ifname: ""
+        iface-type: ""
+        vid: ""
+        vif eth2 {
+            disable: false
+            address 10.1.111.76 {
+                prefix-length: 24
+                disable: false
+            }
+            address fe80::20c:29ff:fefd:f43a {
+                prefix-length: 64
+                disable: false
+            }
+        }
+    }
+    interface eth3 {
+        description: "sw12:swp5"
+        disable: false
+        discard: false
+        unreachable: false
+        management: false
+        parent-ifname: ""
+        iface-type: ""
+        vid: ""
+        vif eth3 {
+            disable: false
+            address 10.1.121.76 {
+                prefix-length: 24
+                disable: false
+            }
+            address fe80::20c:29ff:fefd:f444 {
+                prefix-length: 64
+                disable: false
+            }
+        }
+    }
+}

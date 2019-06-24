@@ -1,0 +1,189 @@
+﻿nslcd: DEBUG: NSS_LDAP nss-pam-ldapd 0.9.4
+nslcd: DEBUG: CFG: threads 5
+nslcd: DEBUG: CFG: uid nslcd
+nslcd: DEBUG: CFG: gid 117
+nslcd: DEBUG: CFG: uri ldap://10.5.1.16/
+nslcd: DEBUG: CFG: ldap_version 3
+nslcd: DEBUG: CFG: binddn cn=sw01,ou=Dienste,dc=cumulus,dc=lab
+nslcd: DEBUG: CFG: bindpw ***
+nslcd: DEBUG: CFG: base dc=cumulus,dc=lab
+nslcd: DEBUG: CFG: scope sub
+nslcd: DEBUG: CFG: deref never
+nslcd: DEBUG: CFG: referrals no
+nslcd: DEBUG: CFG: filter aliases (objectClass=nisMailAlias)
+nslcd: DEBUG: CFG: filter ethers (objectClass=ieee802Device)
+nslcd: DEBUG: CFG: filter group (objectClass=posixGroup)
+nslcd: DEBUG: CFG: filter hosts (objectClass=ipHost)
+nslcd: DEBUG: CFG: filter netgroup (objectClass=nisNetgroup)
+nslcd: DEBUG: CFG: filter networks (objectClass=ipNetwork)
+nslcd: DEBUG: CFG: filter passwd (&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))
+nslcd: DEBUG: CFG: filter protocols (objectClass=ipProtocol)
+nslcd: DEBUG: CFG: filter rpc (objectClass=oncRpc)
+nslcd: DEBUG: CFG: filter services (objectClass=ipService)
+nslcd: DEBUG: CFG: filter shadow (objectClass=shadowAccount)
+nslcd: DEBUG: CFG: map group userPassword "*"
+nslcd: DEBUG: CFG: map passwd userPassword "*"
+nslcd: DEBUG: CFG: map passwd gecos displayName
+nslcd: DEBUG: CFG: map passwd homeDirectory "/home/$uid"
+nslcd: DEBUG: CFG: map passwd loginShell "/bin/bash"
+nslcd: DEBUG: CFG: map shadow userPassword "*"
+nslcd: DEBUG: CFG: map shadow shadowLastChange "${shadowLastChange:--1}"
+nslcd: DEBUG: CFG: map shadow shadowMin "${shadowMin:--1}"
+nslcd: DEBUG: CFG: map shadow shadowMax "${shadowMax:--1}"
+nslcd: DEBUG: CFG: map shadow shadowWarning "${shadowWarning:--1}"
+nslcd: DEBUG: CFG: map shadow shadowInactive "${shadowInactive:--1}"
+nslcd: DEBUG: CFG: map shadow shadowExpire "${shadowExpire:--1}"
+nslcd: DEBUG: CFG: map shadow shadowFlag "${shadowFlag:-0}"
+nslcd: DEBUG: CFG: bind_timelimit 10
+nslcd: DEBUG: CFG: timelimit 0
+nslcd: DEBUG: CFG: idle_timelimit 1000
+nslcd: DEBUG: CFG: reconnect_sleeptime 1
+nslcd: DEBUG: CFG: reconnect_retrytime 10
+nslcd: DEBUG: CFG: ssl off
+nslcd: DEBUG: CFG: tls_reqcert demand
+nslcd: DEBUG: CFG: pagesize 1000
+nslcd: DEBUG: CFG: nss_min_uid 0
+nslcd: DEBUG: CFG: nss_nested_groups no
+nslcd: DEBUG: CFG: validnames /^[a-z0-9._@$()]([a-z0-9._@$() \~-]*[a-z0-9._@$()~-])?$/i
+nslcd: DEBUG: CFG: ignorecase no
+nslcd: DEBUG: CFG: cache dn2uid 15m 15m
+nslcd: version 0.9.4 starting
+nslcd: DEBUG: unlink() of /var/run/nslcd/socket failed (ignored): No such file or directory
+nslcd: DEBUG: initgroups("nslcd",117) done
+nslcd: DEBUG: setgid(117) done
+nslcd: DEBUG: setuid(112) done
+nslcd: accepting connections
+nslcd: [8b4567] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [8b4567] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_initialize(ldap://10.5.1.16/)
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_set_rebind_proc()
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_PROTOCOL_VERSION,3)
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_DEREF,0)
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_TIMELIMIT,0)
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_TIMEOUT,0)
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_NETWORK_TIMEOUT,0)
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_REFERRALS,LDAP_OPT_OFF)
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_RESTART,LDAP_OPT_ON)
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_simple_bind_s("cn=sw01,ou=Dienste,dc=cumulus,dc=lab","***") (uri="ldap://10.5.1.16/")
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [8b4567] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [7b23c6] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [7b23c6] <group/member="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [7b23c6] <group/member="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [7b23c6] <group/member="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(objectClass=posixGroup)(|(memberUid=scooper)(member=CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab)))")
+nslcd: [7b23c6] <group/member="scooper"> DEBUG: ldap_result(): end of results (0 total)
+nslcd: [3c9869] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [3c9869] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [3c9869] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [3c9869] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [334873] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [334873] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [334873] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [334873] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [b0dc51] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [b0dc51] <authc="scooper"> DEBUG: nslcd_pam_authc("scooper","sshd","***")
+nslcd: [b0dc51] <authc="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [b0dc51] <authc="scooper"> DEBUG: myldap_search(base="CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab", filter="(objectClass=*)")
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_initialize(ldap://10.5.1.16/)
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_set_rebind_proc()
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_set_option(LDAP_OPT_PROTOCOL_VERSION,3)
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_set_option(LDAP_OPT_DEREF,0)
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_set_option(LDAP_OPT_TIMELIMIT,0)
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_set_option(LDAP_OPT_TIMEOUT,0)
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_set_option(LDAP_OPT_NETWORK_TIMEOUT,0)
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_set_option(LDAP_OPT_REFERRALS,LDAP_OPT_OFF)
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_set_option(LDAP_OPT_RESTART,LDAP_OPT_ON)
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_sasl_bind("CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab","***") (uri="ldap://10.5.1.16/")
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_unbind()
+nslcd: [b0dc51] <authc="scooper"> DEBUG: bind successful
+nslcd: [b0dc51] <authc="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(objectClass=shadowAccount)(uid=scooper))")
+nslcd: [b0dc51] <authc="scooper"> DEBUG: ldap_result(): end of results (0 total)
+nslcd: [495cff] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [495cff] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_initialize(ldap://10.5.1.16/)
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_set_rebind_proc()
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_PROTOCOL_VERSION,3)
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_DEREF,0)
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_TIMELIMIT,0)
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_TIMEOUT,0)
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_NETWORK_TIMEOUT,0)
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_REFERRALS,LDAP_OPT_OFF)
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_RESTART,LDAP_OPT_ON)
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_simple_bind_s("cn=sw01,ou=Dienste,dc=cumulus,dc=lab","***") (uri="ldap://10.5.1.16/")
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [495cff] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [e8944a] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [e8944a] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [e8944a] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [e8944a] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [5558ec] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [5558ec] <authz="scooper"> DEBUG: nslcd_pam_authz("scooper","sshd","","10.5.1.7","ssh")
+nslcd: [5558ec] <authz="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [5558ec] <authz="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [5558ec] <authz="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(objectClass=shadowAccount)(uid=scooper))")
+nslcd: [5558ec] <authz="scooper"> DEBUG: ldap_result(): end of results (0 total)
+nslcd: [8e1f29] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [8e1f29] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [8e1f29] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [8e1f29] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [e87ccd] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [e87ccd] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [e87ccd] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [e87ccd] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [1b58ba] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [1b58ba] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [1b58ba] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [1b58ba] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [7ed7ab] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [7ed7ab] <sess_o="scooper"> DEBUG: nslcd_pam_sess_o("scooper","sshd","ssh","10.5.1.7",""): pZpxYkQlRjhzsaaNBTFAtM7e
+nslcd: [2dba31] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [2dba31] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_initialize(ldap://10.5.1.16/)
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_set_rebind_proc()
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_PROTOCOL_VERSION,3)
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_DEREF,0)
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_TIMELIMIT,0)
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_TIMEOUT,0)
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_NETWORK_TIMEOUT,0)
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_REFERRALS,LDAP_OPT_OFF)
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_RESTART,LDAP_OPT_ON)
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_simple_bind_s("cn=sw01,ou=Dienste,dc=cumulus,dc=lab","***") (uri="ldap://10.5.1.16/")
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [2dba31] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [83e458] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [83e458] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [83e458] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [83e458] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [7130a3] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [7130a3] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_initialize(ldap://10.5.1.16/)
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_set_rebind_proc()
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_PROTOCOL_VERSION,3)
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_DEREF,0)
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_TIMELIMIT,0)
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_TIMEOUT,0)
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_NETWORK_TIMEOUT,0)
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_REFERRALS,LDAP_OPT_OFF)
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_set_option(LDAP_OPT_RESTART,LDAP_OPT_ON)
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_simple_bind_s("cn=sw01,ou=Dienste,dc=cumulus,dc=lab","***") (uri="ldap://10.5.1.16/")
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [7130a3] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [bbd95a] DEBUG: connection from pid=3126 uid=0 gid=998
+nslcd: [bbd95a] <group/member="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [bbd95a] <group/member="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [bbd95a] <group/member="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(objectClass=posixGroup)(|(memberUid=scooper)(member=CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab)))")
+nslcd: [bbd95a] <group/member="scooper"> DEBUG: ldap_result(): end of results (0 total)
+nslcd: [6c6125] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [6c6125] <passwd=1001> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uidNumber=1001))")
+nslcd: [6c6125] <passwd=1001> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [6c6125] <passwd=1001> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [8c895d] DEBUG: connection from pid=3108 uid=0 gid=0
+nslcd: [8c895d] <passwd="scooper"> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uid=scooper))")
+nslcd: [8c895d] <passwd="scooper"> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [8c895d] <passwd="scooper"> DEBUG: ldap_result(): end of results (1 total)
+nslcd: [3ab105] DEBUG: connection from pid=3127 uid=1001 gid=998
+nslcd: [3ab105] <passwd=1001> DEBUG: myldap_search(base="dc=cumulus,dc=lab", filter="(&(&(Objectclass=user)(memberOf=CN=Operator,OU=Gruppen,DC=cumulus,DC=lab))(uidNumber=1001))")
+nslcd: [3ab105] <passwd=1001> DEBUG: ldap_result(): CN=Sheldon Cooper,OU=Admins,DC=cumulus,DC=lab
+nslcd: [3ab105] <passwd=1001> DEBUG: ldap_result(): end of results (1 total)

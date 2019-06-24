@@ -1,0 +1,152 @@
+<html>
+<!--
+Visualization of hardware support in iptables targets
+Tested and working in Chrome 67.0.3396.99
+
+Based on:
+https://api.highcharts.com/highcharts/series.sunburst
+
+Source:
+https://docs.cumulusnetworks.com/download/attachments/8357345/Linux%20IPtables%20Default%20Tables.png
+https://docs.cumulusnetworks.com/download/thumbnails/8357345/Linux%20EBtables%20Default%20Tables.png
+-->
+ <head>
+  <style>
+   #container {
+     min-width: 310px;
+     max-width: 800px;
+     margin: 0 auto
+   }
+  </style>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/sunburst.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+ </head>
+
+ <body>
+  <div id="container"></div>
+
+  <script>
+var data = [{
+    'id': '0.0',
+    'parent': '',
+    'name': 'iptables'
+  },
+
+  { 'id': '1.1',
+    'parent': '0.0',
+    'name': 'IPv4/IPv6'
+  }, {
+    'id': '2.1',
+    'parent': '1.1',
+    'name': 'Filter',
+    'color': 'lightgreen'
+  },
+  { 'name': 'INPUT',   'parent': '2.1', 'color': 'green', 'value': 5 },
+  { 'name': 'OUTPUT',  'parent': '2.1', 'color': 'red',   'value': 5 },
+  { 'name': 'FORWARD', 'parent': '2.1', 'color': 'green', 'value': 5 },
+  {
+    'id': '2.2',
+    'parent': '1.1',
+    'name': 'NAT',
+    'color': 'lightsalmon'
+  },
+  { 'name': 'OUTPUT',      'parent': '2.2', 'color': 'red', 'value': 5 },
+  { 'name': 'PREROUTING',  'parent': '2.2', 'color': 'red', 'value': 5 },
+  { 'name': 'POSTROUTING', 'parent': '2.2', 'color': 'red', 'value': 5 },
+
+  {
+    'id': '2.3',
+    'parent': '1.1',
+    'name': 'Mangle',
+    'color': 'lightgreen'
+  },
+  { 'name': 'INPUT',       'parent': '2.3', 'color': 'green', 'value': 3 },
+  { 'name': 'OUTPUT',      'parent': '2.3', 'color': 'red', 'value': 3 },
+  { 'name': 'FORWARD',     'parent': '2.3', 'color': 'green', 'value': 3 },
+  { 'name': 'PREROUTING',  'parent': '2.3', 'color': 'red', 'value': 3 },
+  { 'name': 'POSTROUTING', 'parent': '2.3', 'color': 'red', 'value': 3 },
+
+
+
+  { 'id': '1.2',
+    'parent': '0.0',
+    'name': 'MAC'
+  }, {
+    'id': '3.1',
+    'parent': '1.2',
+    'name': 'Filter',
+    'color': 'lightgreen'
+  },
+  { 'name': 'INPUT',   'parent': '3.1', 'color': 'green', 'value': 5 },
+  { 'name': 'OUTPUT',  'parent': '3.1', 'color': 'red',   'value': 5 },
+  { 'name': 'FORWARD', 'parent': '3.1', 'color': 'green', 'value': 5 },
+  {
+    'id': '3.2',
+    'parent': '1.2',
+    'name': 'NAT',
+    'color': 'lightsalmon'
+  },
+  { 'name': 'OUTPUT',      'parent': '3.2', 'color': 'red', 'value': 5 },
+  { 'name': 'PREROUTING',  'parent': '3.2', 'color': 'red', 'value': 5 },
+  { 'name': 'POSTROUTING', 'parent': '3.2', 'color': 'red', 'value': 5 },
+
+  {
+    'id': '3.3',
+    'parent': '1.2',
+    'name': 'Mangle',
+    'color': 'lightsalmon'
+  },
+  { 'name': 'INPUT',       'parent': '3.3', 'color': 'red', 'value': 3 },
+  { 'name': 'FORWARD',     'parent': '3.3', 'color': 'red', 'value': 3 },
+  { 'name': 'OUTPUT',      'parent': '3.3', 'color': 'red', 'value': 3 },
+  { 'name': 'PREROUTING',  'parent': '3.3', 'color': 'red', 'value': 3 },
+  { 'name': 'POSTROUTING', 'parent': '3.3', 'color': 'red', 'value': 3 },
+];
+
+// Splice in transparent for the center circle
+Highcharts.getOptions().colors.splice(0, 0, 'transparent');
+
+Highcharts.chart('container', {
+  chart: {
+    height: '100%'
+  },
+  title: {
+    text: 'iptables hardware support'
+  },
+  series: [{
+    type: "sunburst",
+    data: data,
+    dataLabels: {
+      format: '{point.name}',
+      align: "center",
+      style: {
+        fontSize: "14px",
+        color: 'black',
+        textOutline: '',
+      }
+    },
+    borderWidth: 3,
+    borderColor: 'white',
+    levels: [
+      {
+        level: 1,
+        levelIsConstant: false,
+      }, {
+        level: 2,
+        colorByPoint: true,
+      }, {
+        level: 3,
+      }, {
+        level: 4,
+        levelSize: {
+          unit: 'weight',
+          value: 1.5
+        }
+      }
+    ]
+  }]
+});
+  </script>
+ </body>
+</html>

@@ -1,0 +1,260 @@
+!
+!  vRouter aus Kapitel 16, läuft auf VMware Workstation 14
+!  Cisco CSR 1000, Version 16.06.04
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console virtual
+!
+hostname vrouter1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+enable secret 5 $1$6VZw$/oLpzm6SD83DNNp/J1nuO/
+!
+aaa new-model
+!
+!
+aaa authentication login MGMT local
+aaa authorization exec MGMT local none 
+!
+!
+!         
+!
+!
+aaa session-id common
+clock timezone MEZ 1 0
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name lab
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+!         
+! 
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-2477768859
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2477768859
+ revocation-check none
+ rsakeypair TP-self-signed-2477768859
+!
+!
+crypto pki certificate chain TP-self-signed-2477768859
+ certificate self-signed 01
+  30820330 30820218 A0030201 02020101 300D0609 2A864886 F70D0101 05050030 
+  31312F30 2D060355 04031326 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 32343737 37363838 3539301E 170D3138 31303038 31313233 
+  35335A17 0D323030 31303130 30303030 305A3031 312F302D 06035504 03132649 
+  4F532D53 656C662D 5369676E 65642D43 65727469 66696361 74652D32 34373737 
+  36383835 39308201 22300D06 092A8648 86F70D01 01010500 0382010F 00308201 
+  0A028201 0100B263 A75DE63E A3CD2267 9083B119 35ABDDFA 4DD72D6E 7B47CD18 
+  7949DC70 CB73C505 8D3656AA 1C7809DA E34FE5AC A1AEB20C E087370F 2BF8CA8D 
+  909BE544 687D5BC0 D80026CA E47C0E94 4D733CB0 883FAE2E 8EC85ED7 A1ECE713 
+  5678B2F3 8389F489 6061BFFF 84DC735E 03AF2513 D4A39F1B 0673A939 463E2757 
+  3D96ED8B 816E06DE 19AE7673 F3D718E0 74256E07 B480A237 0170124D 34A56C2E 
+  2CF9924D EF84CB1A 45498B5C 8CF7110F B1931BB8 DC69762A D35E98A7 382D3490 
+  AE538998 33D625BC 7AE9E972 3218D63D AE33FAB7 FF6EA786 EF530EBE 386FE5DA 
+  11178BF1 0AF06883 5E80D88D 7FD3C7AE 2ADA9B3E 08544508 D7CABC77 DDE47CD3 
+  C0EC1636 9F7F0203 010001A3 53305130 0F060355 1D130101 FF040530 030101FF 
+  301F0603 551D2304 18301680 14133945 31C49A48 381C3CB1 E9B1EDF7 90383E45 
+  F0301D06 03551D0E 04160414 13394531 C49A4838 1C3CB1E9 B1EDF790 383E45F0 
+  300D0609 2A864886 F70D0101 05050003 82010100 3522124F AFE3F181 4AE1BC38 
+  AA9736B4 85F84B05 5D432E63 0C8D6DAF 9F8590F4 A6C266DD 56D06CF6 1BC265C7 
+  FAD285F7 A2254D64 648630DF 892AA236 0559C88B DB13CE6A A28DF824 0E1FC6EB 
+  C46E57DF F1C1DE38 7EC9F8A5 AE53096B BDE2C74C 3528BE6E A88768A6 D82B0640 
+  453027C2 280B8AC1 FCF2400D 23C593F8 307598A4 31B02613 080200B1 550D6F6C 
+  01DC22D8 846A45EB 808FCE58 92100E7E 473E70B5 B0EC2E6D EE8EC062 5C74F960 
+  A13D8065 EA149C5B ADBD959D 156E36A8 165B03BB 666E9342 D583B7B7 721529FE 
+  BDDD79B5 867F8E5B 513335AA 3428CC20 2ED749B4 10C5F563 946B2429 35F2CA3C 
+  DED2CCAF 9E564C59 DC364DFA AF740EFA 2C7F12A7
+  	quit
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+license udi pid CSR1000V sn 9HG7VDKY8VM
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+username admin privilege 15 secret 5 $1$Xehu$xcQcm.wkBIwlIab0Nzrwr1
+!
+redundancy
+!
+!
+!
+!
+!
+!
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!         
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ description OspfRouterId
+ ip address 7.1.7.1 255.255.255.255
+!
+interface GigabitEthernet1
+ description management
+ ip address 10.5.1.71 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ description server
+ ip address 10.11.2.1 255.255.255.0
+ ip ospf 1 area 1
+ negotiation auto
+ ipv6 address FD00:11:2::1/64
+ no mop enabled
+ no mop sysid
+!         
+interface GigabitEthernet3
+ description uplink sw11:swp5
+ ip address 10.1.111.71 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf dead-interval 4
+ ip ospf hello-interval 1
+ ip ospf 1 area 1
+ negotiation auto
+ ipv6 enable
+ ipv6 ospf 1 area 1
+ ipv6 ospf network point-to-point
+ ipv6 ospf hello-interval 1
+ ipv6 ospf dead-interval 4
+ bfd interval 300 min_rx 300 multiplier 3
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ description uplink sw12:swp5
+ ip address 10.1.121.71 255.255.255.0
+ ip ospf network point-to-point
+ ip ospf dead-interval 4
+ ip ospf hello-interval 1
+ ip ospf 1 area 1
+ negotiation auto
+ ipv6 enable
+ ipv6 ospf 1 area 1
+ ipv6 ospf network point-to-point
+ ipv6 ospf hello-interval 1
+ ipv6 ospf dead-interval 4
+ bfd interval 300 min_rx 300 multiplier 3
+ no mop enabled
+ no mop sysid
+!
+router ospfv3 1
+ router-id 7.1.7.1
+ auto-cost reference-bandwidth 10000
+ !
+ address-family ipv6 unicast
+  router-id 7.1.7.1
+  auto-cost reference-bandwidth 10000
+ exit-address-family
+!
+router ospf 1
+ router-id 7.1.7.1
+ auto-cost reference-bandwidth 10000
+ passive-interface GigabitEthernet1
+ passive-interface GigabitEthernet2
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+ip route 10.4.0.0 255.255.0.0 10.5.1.250 name MGMT
+!
+ip ssh pubkey-chain
+  username admin
+   key-hash ssh-rsa 55E89F749EF27338DEC4CA217F0CCBAE 
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ exec-timeout 60 0
+ authorization exec MGMT
+ login authentication MGMT
+ transport input telnet ssh
+line vty 5 15
+ exec-timeout 60 0
+ authorization exec MGMT
+ login authentication MGMT
+ transport input telnet ssh
+!
+wsma agent exec
+!
+wsma agent config
+!
+wsma agent filesys
+!
+wsma agent notify
+!
+!
+end

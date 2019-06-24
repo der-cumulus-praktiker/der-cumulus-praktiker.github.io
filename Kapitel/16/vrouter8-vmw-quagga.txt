@@ -1,0 +1,67 @@
+!
+!  vRouter aus Kapitel 16, läuft auf VMware Workstation 14
+!  Quagga 1.2.2
+!
+hostname vrouter8-quagga
+log file /var/log/quagga/zebra.log
+!
+password zebra
+enable password zebra
+!
+interface eth0
+ description management
+ ipv6 ospf6 network broadcast
+!
+interface eth1
+ description server
+ ip address 10.11.2.1/24
+ ip ospf area 0.0.0.1
+ ipv6 address fd00:11:2::1/64
+ ipv6 ospf6 network broadcast
+ ipv6 ospf6 passive
+!
+interface eth2
+ bandwidth 1000000
+ description sw11-swp5
+ ip address 10.1.111.78/24
+ ip ospf area 0.0.0.1
+ ip ospf dead-interval 4
+ ip ospf hello-interval 1
+ ip ospf network point-to-point
+ ipv6 ospf6 dead-interval 4
+ ipv6 ospf6 hello-interval 1
+ ipv6 ospf6 network point-to-point
+!
+interface eth3
+ bandwidth 1000000
+ description sw12-swp5
+ ip address 10.1.121.78/24
+ ip ospf area 0.0.0.1
+ ip ospf dead-interval 4
+ ip ospf hello-interval 1
+ ip ospf network point-to-point
+ ipv6 ospf6 dead-interval 4
+ ipv6 ospf6 hello-interval 1
+ ipv6 ospf6 network point-to-point
+!
+interface lo
+!
+router ospf
+ ospf router-id 7.8.7.8
+ auto-cost reference-bandwidth 10000
+ passive-interface eth0
+ passive-interface eth1
+!
+router ospf6
+ router-id 7.8.7.8
+ auto-cost reference-bandwidth 10000
+ interface eth2 area 0.0.0.1
+ interface eth1 area 0.0.0.1
+ interface eth3 area 0.0.0.1
+!
+ip forwarding
+ipv6 forwarding
+!
+line vty
+!
+end
