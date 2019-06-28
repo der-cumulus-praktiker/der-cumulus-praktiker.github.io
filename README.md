@@ -3,7 +3,7 @@
 In einem modernen Rechenzentrum müssen die Switches mehr bieten, als Pakete zu transportieren. Hohe Geschwindigkeiten gehören heutzutage zum Standard.
 Darüberhinaus muss die Infrastruktur robust, flexibel und sicher sein. Und welche Neuerungen bringen Cloud, Netzwerk-Disaggregation oder das Software-definierten Netzwerk?
 
-__Erh&auml;ltlich ab Juli 2019 als E-Book oder gedrucktes Buch.__
+__Erh&auml;ltlich seit Juni 2019 als E-Book oder gedrucktes Buch.__
 
 Ein Blick ins [Inhaltsverzeichnis](Inhaltsverzeichnis.md).
 
@@ -36,7 +36,7 @@ Fast alle Kapitel benutzen denselben Netzaufbau und diegleichen IPv4/IPv6-Adress
 
 * Das [Korrekturverzeichnis](errata.pdf) listet die inhaltlichen Fehler und ihre Verbesserung.
 
-* Buch kaufen bei [Amazon](https://www.amazon.de) oder [BoD](https://www.bod.de/buchshop)
+* Buch kaufen bei [Amazon](https://www.amazon.de) oder [BoD](https://www.bod.de/buchshop/der-cumulus-praktiker-markus-stubbig-9783738604917)
 
 * Kontakt zum Autor per [E-Mail](mailto:der.cumulus.praktiker@gmail.com)
 
