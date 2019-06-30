@@ -36,7 +36,7 @@ Fast alle Kapitel benutzen denselben Netzaufbau und diegleichen IPv4/IPv6-Adress
 
 * Das [Korrekturverzeichnis](errata.pdf) listet die inhaltlichen Fehler und ihre Verbesserung.
 
-* Buch kaufen bei [Amazon](https://www.amazon.de) oder [BoD](https://www.bod.de/buchshop/der-cumulus-praktiker-markus-stubbig-9783738604917)
+* Buch kaufen bei [Amazon](https://www.amazon.de/Cumulus-Praktiker-Datacenter-Switching-mit-Linux/dp/373860491X/) oder [BoD](https://www.bod.de/buchshop/der-cumulus-praktiker-markus-stubbig-9783738604917)
 
 * Kontakt zum Autor per [E-Mail](mailto:der.cumulus.praktiker@gmail.com)
 
